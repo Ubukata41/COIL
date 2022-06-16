@@ -47,36 +47,36 @@ python run_marco.py \
 You should make a new directory for the experiment.
 
 You should have candidate documents in the form of
-'''
+```
 doc id </t> document
-'''
+```
 
 NUMBER stands for the directory you made
-'''
+```
 # shaping documents
 python scripts/www4_make_corpus_from_docs.py \
     --corpus_before ${www4 docs file path}  \
     --corpus_after ${NUMBER}/1_subset_corpus \
     --pid_file ${NUMBER}/pid_file \
     --dict ${NUMBER}/docid_to_intid_table.pkl
-'''
-'''
+```
+```
 # shaping queries
 python scripts/get_queries_from_topics.py \
     --topics_before ${WWW topics file} \
     --topics_after ${NUMBER}/1_shaped_www3_topics.txt
-'''
+```
 
 ## splitting documents
 Split documents to fit in BERT
-'''
+```
 INPUT=${NUMBER}/1_subset_corpus
 OUTPUT=${NUMBER}/split_chunks
 python scripts/document_truncation.py --input $INPUT --output $OUTPUT
-'''
+```
 
 ## making corpus & queries for encoding
-'''
+```
 ### make corpus for encoding
 INPUT=${NUMBER}/split_chunks
 SAVE_DIRECTORY=${NUMBER}/2_for_encoding_corpus
@@ -90,8 +90,8 @@ python data_helpers/common/encode_entry.py \
 wc ${NUMBER}/2_for_encoding_corpus/split_chunks.json
 # example↓ if there are 264755 lines
 split -l 2648 -a 2 -d split_chunks.json split
-'''
-'''
+```
+```
 ### make queries for encoding
 INPUT=${NUMBER}/1_shaped_www3_topics.txt
 SAVE_DIRECTORY=${NUMBER}/2_for_encoding_queries
@@ -100,10 +100,10 @@ python data_helpers/common/encode_entry.py \
     --truncate 16 \
     --input_file $INPUT \
     --save_to $SAVE_DIRECTORY
-'''
+```
 
 ## making sure one document don't go to the other splits
-'''
+```
 CORPUS=${NUMBER}/2_for_encoding_corpus
 for i in $(seq 0 98)
 do
@@ -112,7 +112,7 @@ do
   I=$(printf "%02d" $i)
   python scripts/split_corpus.py --split_before ${CORPUS}/split${I} --split_after ${CORPUS}/split${J}
 done
-'''
+```
 
 ## Encoding
 After training, you can encode the corpus splits and queries.
