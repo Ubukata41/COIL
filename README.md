@@ -1,4 +1,7 @@
 # COIL
+
+test
+
 Repo for our NAACL paper, [COIL: Revisit Exact Lexical Match in Information Retrieval with Contextualized Inverted List](https://arxiv.org/abs/2104.07186). The code covers learning COIL models well as encoding and retrieving with COIL index. 
 
 The code was refactored from our original experiment version to use the huggingface Trainer interface for future compatibility.
