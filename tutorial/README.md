@@ -249,3 +249,11 @@ python retriever/merger.py \
 
 ```
 
+## Turn scores into WWW format
+```
+SCORE_DIR=${NUMBER}/4_score
+python scripts/score_to_www4_format.py 
+  --rank_before ${SCORE_DIR}/rank.txt 
+  --rank_after ${SCORE_DIR}/www3_rank.txt 
+  --dict ${NUMBER}/docid_to_intid_table.pkl
+```
