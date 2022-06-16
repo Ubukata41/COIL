@@ -1,11 +1,12 @@
 # COIL
 
-Follow the tutorial [here](tutorial) for WWW task.
-
 Repo for our NAACL paper, [COIL: Revisit Exact Lexical Match in Information Retrieval with Contextualized Inverted List](https://arxiv.org/abs/2104.07186). The code covers learning COIL models well as encoding and retrieving with COIL index. 
 
 The code was refactored from our original experiment version to use the huggingface Trainer interface for future compatibility.
 This repo will also host variants of COIL. We welcome pull requests!
+
+## WWW
+Follow the tutorial [here](tutorial) for the WWW task.
 
 ## Contextualized Exact Lexical Match
 COIL systems are based on the idea of *contextualized exact lexical match*. It replaces term frequency based term matching in classical systems like BM25 with contextualized word representation similarities. It thereby gains the ability to model matching of context. Meanwhile COIL confines itself to comparing exact  lexical matched tokens and therefore can retrieve efficiently with inverted list form data structure.  Details can be found in our [paper](https://arxiv.org/abs/2104.07186).
