@@ -48,7 +48,7 @@ You should make a new directory for the experiment.
 
 You should have candidate documents in the form of
 ```
-doc id </t> document
+doc_id </t> document
 ```
 
 NUMBER stands for the directory you made
