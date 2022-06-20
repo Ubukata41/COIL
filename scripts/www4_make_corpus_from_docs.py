@@ -9,6 +9,7 @@ python scripts_ubu/www4_make_corpus_fromdocs.py \
     --corpus_before www4_data/www4_sents.csv \
     --corpus_after ${NUMBER}/1_subset_corpus \
     --pid_file ${NUMBER}/pid_file_doc
+    --dict ${NUMBER}/docid_to_intid_table.pkl
 '''
 
 from argparse import ArgumentParser
