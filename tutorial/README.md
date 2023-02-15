@@ -1,8 +1,8 @@
-## Introduction
+# Introduction
 This code reproduces the work done in the We Want Web 4 Task.
 The model is fine-tuned by MSMARCO passage dataset, performed retrieval on the WWW4 dataset.
 
-## Dependencies
+# Dependencies
 The code has been tested with,
 ```
 pytorch==1.8.1
@@ -15,9 +15,7 @@ torch_scatter==2.0.6
 faiss==1.7.0
 ```
 
-## Usage
-The following sections will work through how to use this code base to train and retrieve over the WWW4 dataset.
-## Training
+# Training
 You can download the train file `psg-train.tar.gz` for BERT from our resource [link](http://boston.lti.cs.cmu.edu/luyug/coil/msmarco-psg/). Alternatively, you can run pre-processing by yourself following the pre-processing [instructions](data_helpers).
 
 Extract the training set from the tar ball and run the following code to launch training for msmarco passage.
@@ -44,7 +42,7 @@ python run_marco.py \
   --pooling max 
 ```
 
-## shaping documents & queries
+# Shaping Documents & Queries
 You should make a new directory for the experiment.
 
 You should have candidate documents in the form of
@@ -52,7 +50,7 @@ You should have candidate documents in the form of
 doc_id </t> document
 ```
 
-##### Shaping documents
+### Shaping documents
 NUMBER stands for the directory you made.
 ```
 NUMBER=<make directory yourself>
@@ -62,7 +60,7 @@ python scripts/www4_make_corpus_from_docs.py \
     --pid_file ${NUMBER}/pid_file \
     --dict ${NUMBER}/docid_to_intid_table.pkl
 ```
-##### Shaping Queries
+### Shaping Queries
 ```
 NUMBER=<>
 python scripts/get_queries_from_topics.py \
@@ -70,20 +68,21 @@ python scripts/get_queries_from_topics.py \
     --topics_after ${NUMBER}/1_shaped_www3_topics.txt
 ```
 
-## Tokenize corpus for encoding
-Choose one of the below steps.
-### Split documents
+# Tokenize Corpus & Queries
+### Tokenize Corpus for Encoding
+Choose one of the two below steps.
+- Split documents
 This step splits long documents to fit in BERT.
 ```
 bash scripts/split.sh ${NUMBER}
 ```
-### Original COIL
+-# Original COIL
 This step truncate the documents to the limit length of BERT.
 ```
 bash scripts/original.sh ${NUMBER}
 ```
 
-## make queries for encoding
+### Make Queries for Encoding
 ```
 NUMBER=<>
 INPUT=${NUMBER}/1_shaped_www3_topics.txt
@@ -95,8 +94,9 @@ python data_helpers/common/encode_entry.py \
     --save_to $SAVE_DIRECTORY
 ```
 
-## Encoding
+# Encoding Corpus & Queries
 After training, you can encode the corpus splits and queries.
+### Encode Corpus
 ```
 NUMBER=<>
 ENCODE_OUT_DIR=${NUMBER}/3_encoded_corpus_embeddings
@@ -124,7 +124,7 @@ do
 done
 ```
 
-Then encode the queries.
+### Encode Queries
 ```
 NUMBER=<>
 ENCODE_QRY_OUT_DIR=${NUMBER}/3_encoded_query_embeddings
@@ -148,7 +148,7 @@ python run_marco.py \
 ```
 Note that here `p_max_len` always controls the maximum length of the encoded text, regardless of the input type.
 
-## Retrieval
+# Retrieval
 To use the fast retriever, you need to [compile the extension](retriever#fast-retriver). 
 
 To do retrieval, run the following steps, 
@@ -211,7 +211,7 @@ python retriever/merger.py \
 
 ```
 
-## Turn scores into WWW format
+# Turn scores into WWW format
 ```
 NUMBER=<>
 SCORE_DIR=${NUMBER}/4_score
