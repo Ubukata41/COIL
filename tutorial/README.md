@@ -72,11 +72,13 @@ python scripts/get_queries_from_topics.py \
 ### Tokenize Corpus for Encoding
 Choose one of the two below steps.
 - Split documents
+
 This step splits long documents to fit in BERT.
 ```
 bash scripts/split.sh ${NUMBER}
 ```
--# Original COIL
+- Original COIL
+
 This step truncate the documents to the limit length of BERT.
 ```
 bash scripts/original.sh ${NUMBER}
