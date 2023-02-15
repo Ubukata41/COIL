@@ -5,9 +5,9 @@ www形式のtopicファイルを整形する。整形後は
 
 usage
 NUMBER=<your file>
-python scripts_ubu/get_queries_from_topics.py \
-    --topics_before www3_data/topics.www3.txt \
-    --topics_after ${NUMBER}/shaped_www3_topics.txt
+python scripts/get_queries_from_topics.py \
+    --topics_before ${path_to_topic_file} \
+    --topics_after ${NUMBER}/1_shaped_www3_topics.txt
 '''
 import sys
 import re

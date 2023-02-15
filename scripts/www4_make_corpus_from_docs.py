@@ -1,14 +1,15 @@
 '''
-www4_doc.csvから、COILで処理しやすいように形式を整える
+COILで処理しやすいように形式を整える
 <document id><\t><document>
 の形にする。
 
 usage
 NUMBER=<make directory yourself>
-python scripts_ubu/www4_make_corpus_fromdocs.py \
-    --corpus_before www4_data/www4_sents.csv \
+python scripts/www4_make_corpus_from_docs.py \
+    --corpus_before ${path_to_www4_docs_file} \
     --corpus_after ${NUMBER}/1_subset_corpus \
-    --pid_file ${NUMBER}/pid_file_doc
+    --pid_file ${NUMBER}/pid_file \
+    --dict ${NUMBER}/docid_to_intid_table.pkl
 '''
 
 from argparse import ArgumentParser
@@ -33,7 +34,7 @@ def eval_bm25(collection_file, output_fn, pid_file, topK=1000):
     top_doc_dict = defaultdict(list)
     #通し番号とdocument idのペア
     sent_dict = {}
-    #qnoとqidのペア、意味わからん、同じもののペア
+    #qnoとqidのペア
     q_dict = {}
     # document id と document text のペア
     my_dict = {}
@@ -58,14 +59,10 @@ def eval_bm25(collection_file, output_fn, pid_file, topK=1000):
         i=1
         # document id とdocumentを書く
         for key, value in my_dict.items():
-            
+            # documentidは数値である必要があるため、文字列を消す
             documentid = i
             docid_to_intid_table[i]=key
-            # documentidは数値である必要があるため、文字列を消す
-
-
-
-            # doc_pair.tsvはいわゆるコーパスのサブセット、pid_fileはdocumentidの羅列。ただの確認用
+            
             out_file.write('{}\t{}\n'.format(documentid, value))
             pid_file.write('{}, id: {}\n'.format(key, documentid))
             if len(value.strip().split()) > 512:
@@ -82,6 +79,7 @@ def eval_bm25(collection_file, output_fn, pid_file, topK=1000):
         for key in q_dict.keys():
             intkey.append(int(key))
 
+        # 確認用ファイル
         pid_file.write('more than 512 tokens : {}\n'.format(over))
         pid_file.write('less than 512 tokens : {}\n'.format(less))
         pid_file.write('number of documents : {}\n'.format(over + less))
